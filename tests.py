@@ -205,10 +205,21 @@ class TestWinnerInHand(unittest.TestCase):
         actual = winner_in_hand(self.on_table, 6)  # игра на купа
         self.assertEqual(expected, actual)
 
+    def test_decision_making_certain_trumps_first_call(self):
+        c1 = Card(14, 'S')
+        c2 = Card(14, 'D')
+        c3 = Card(11, 'D')
+        c4 = Card(13, 'H')
+        c5 = Card(7, 'D')
+
+        P0.hand = [c1, c2, c3, c4, c5]
+        availables = list(range(7))
+        self.assertEqual(2, decide_announce(P0, availables))
+
     def test_decision_making_no_trumps_first_call(self):
         c1 = Card(14, 'S')
         c2 = Card(14, 'D')
-        c3 = Card(11, 'S')
+        c3 = Card(11, 'C')
         c4 = Card(13, 'H')
         c5 = Card(7, 'C')
 
