@@ -1,5 +1,5 @@
 import unittest
-from practice import *
+from game import *
 
 
 class TestOverallBehavior(unittest.TestCase):
