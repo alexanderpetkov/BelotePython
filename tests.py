@@ -279,6 +279,28 @@ class TestBonuses(unittest.TestCase):
                      self.card9]:
             del card
 
+    def test_are_consecutive_true(self):
+        nominals = [10, 11, 12, 13]
+        self.assertTrue(are_consecutive(nominals))
+
+    def test_are_consecutive_false(self):
+        nominals = [10, 12, 13]
+        self.assertFalse(are_consecutive(nominals))
+
+    def test_check_for_consecutive_three(self):
+        cards = [self.card1, self.card2, self.card3, self.card4, self.card5]
+        expected = [1, [self.card1, self.card2, self.card3]]
+        actual = check_for_consecutive(cards, 3)
+        self.assertEqual(expected, actual)
+
+    def test_check_for_consecutive_five(self):
+        cards = [self.card1, self.card2, self.card3,
+                 self.card4, self.card5, self.card6]
+        expected = [1, [self.card1, self.card2, self.card3,
+                        self.card5, self.card6]]
+        actual = check_for_consecutive(cards, 5)
+        self.assertEqual(expected, actual)
+
     def test_no_bonuses(self):
         cards = [self.card1, self.card8, self.card2, self.card4, self.card6]
         expected = {3: 0, 4: 0, 5: 0, '4ofakind': 0, 'belote': 0}
