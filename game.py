@@ -318,7 +318,7 @@ def no_trumps_suitable(cards):
 
 
 def all_trumps_suitable(cards):
-    if any([count_nominal(cards, 11) >= 2, 
+    if any([count_nominal(cards, 11) >= 2,
             all([count_nominal(cards, 9) >= 2,
                  count_nominal(cards, 11) >= 1]),
             count_nominal(cards, 9) >= 3]):
