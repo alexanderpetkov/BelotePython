@@ -302,6 +302,14 @@ def count_nominal(cards, nominal):
     return len([c for c in cards if c.nominal == nominal])
 
 
+def certain_trump_suitable(cards, trump):
+    trumps = [c for c in cards if c.color == trump]
+    if all([len(trumps) >= 3,
+           len([c for c in trumps if c.nominal == 9 or c.nominal == 11])]):
+        return True
+    return False
+
+
 def no_trumps_suitable(cards):
     if any([count_nominal(cards, 14) >= 2,
             count_nominal(cards, 14) >= 1 and count_nominal(cards, 10) >= 2]):
@@ -310,7 +318,9 @@ def no_trumps_suitable(cards):
 
 
 def all_trumps_suitable(cards):
-    if any([count_nominal(cards, 11) >= 2, count_nominal(cards, 9) >= 2,
+    if any([count_nominal(cards, 11) >= 2, 
+            all([count_nominal(cards, 9) >= 2,
+                 count_nominal(cards, 11) >= 1]),
             count_nominal(cards, 9) >= 3]):
         return True
     return False
@@ -318,9 +328,9 @@ def all_trumps_suitable(cards):
 
 def decide_announce(speaker, availables, leader=None, announce=0):
     if leader is None:
-        for i in range(1, 5):
-            if count_color(speaker.hand, TRUMPS[i]) >= 3 and i in availables:
-                return i
+        for ann in range(1, 5):
+            if certain_trump_suitable(speaker.hand, TRUMPS[ann]):
+                return ann
         if no_trumps_suitable(speaker.hand) and 5 in availables:
             return 5
         if all_trumps_suitable(speaker.hand) and 6 in availables:
